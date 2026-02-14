@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bussain's Digital Garden ✦</title>
+
+<style>
+:root {
+  --primary:#050816;
+  --secondary:#0E1430;
+  --accent:#8A8FFF;
+  --accent-soft:#4C52B8;
+  --hp:#ff5c7a;
+  --mp:#6aa9ff;
+  --text:#F1F2FF;
+  --text-light:#B8BCFF;
+  --radius:18px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:radial-gradient(circle at 20% 30%, #1a1f4d 0%, #050816 60%);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ✦ Pixel Galaxy Canvas */
+#pixelGalaxy{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+}
+
+/* ✦ Press Start */
+.start-screen{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#0E1430 0%, #050816 80%);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
+  text-align:center;
+}
+
+.start-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg,#fff,#8A8FFF,#CDA4FF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.press-start{
+  font-size:1.2rem;
+  color:var(--accent);
+  animation:blink 1.2s infinite;
+  cursor:pointer;
+  padding: 1rem 2rem;
+  border: 1px solid var(--accent-soft);
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.press-start:hover {
+  background: rgba(138,143,255,0.1);
+  box-shadow: 0 0 20px rgba(138,143,255,0.3);
+}
+
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:.2}
+}
+
+/* ✦ Cursor */
+.cursor{
+  width:18px;
+  height:18px;
+  border:2px solid var(--accent);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition: 0.05s linear;
+  z-index:9999;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* ✦ Navbar Scroll Hide */
+.navbar{
+  position:fixed;
+  width:100%;
+  top:0;
+  background:rgba(5,8,22,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--accent-soft);
+  padding:1rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+  transition:transform .4s ease;
+}
+
+.navbar.hidden{
+  transform:translateY(-100%);
+}
+
+.logo-area{
+  display:flex;
+  flex-direction:column;
+  gap:.4rem;
+}
+
+/* ✦ HP/MP Animated */
+.status-bars{display:flex;flex-direction:column;gap:4px}
+.bar{
+  width:160px;height:10px;background:#1b214d;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius: 10px;
+  overflow:hidden;position:relative;
+}
+.bar-fill{height:100%;position:relative}
+
+.hp{background:var(--hp);width:85%;animation:hpPulse 3s infinite}
+.mp{background:var(--mp);width:70%;animation:mpPulse 4s infinite}
+
+@keyframes hpPulse{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.4)}
+}
+@keyframes mpPulse{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.6)}
+}
+
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:var(--text-light);text-decoration:none;transition:.3s}
+.nav-links a:hover{color:var(--accent)}
+
+section{min-height:100vh;padding:120px 10% 80px}
+
+.hero{display:flex;flex-direction:column;justify-content:center}
+
+.hero h1{
+  font-size:3rem;
+  background:linear-gradient(90deg,#fff,#8A8FFF,#CDA4FF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom: 1rem;
+}
+
+/* ✦ Pixel Vanish Effect */
+.subheading{
+  color:var(--text-light);
+  font-size:1.2rem;
+  position:relative;
+  transition:opacity .4s ease, transform .4s ease;
+  max-width: 600px;
+}
+
+.subheading.pixel-hide{
+  opacity:0;
+  transform:translateY(-10px) scale(.95);
+  filter:blur(4px);
+}
+
+.card{
+  background:linear-gradient(145deg,#0E1430,#141B45);
+  border-radius:var(--radius);
+  padding:2rem;
+  border:1px solid rgba(138,143,255,.2);
+  transition:0.3s;
+  margin-top:2rem;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 25px rgba(138,143,255,.3);
+  border-color: var(--accent-soft);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:2rem;
+  margin-top: 2rem;
+}
+
+.grid .card {
+  margin-top: 0;
+  height: 100%;
+}
+
+.fade-up{
+  opacity:0;
+  transform:translateY(40px);
+  transition:.8s;
+}
+
+.fade-up.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+footer{
+  text-align:center;
+  padding:2rem;
+  background:#0E1430;
+  border-top: 1px solid var(--accent-soft);
+}
+</style>
+</head>
+<body>
+
+<canvas id="pixelGalaxy"></canvas>
+
+<div class="start-screen" id="startScreen">
+  <h1>✦ BUSSAIN'S DIGITAL GARDEN ✦</h1>
+  <div class="press-start" onclick="startSite()">▶ PRESS START</div>
+</div>
+
+<div class="cursor"></div>
+
+<nav class="navbar" id="navbar">
+  <div class="logo-area">
+    <div style="font-weight: bold; font-size: 1.2rem;">✦ Bussain</div>
+    <div class="status-bars">
+      <div class="bar"><div class="bar-fill hp"></div></div>
+      <div class="bar"><div class="bar-fill mp"></div></div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="shop.html">Shop</a>
+    <a href="post.html">Post</a>
+  </div>
+</nav>
+
+<section id="home" class="hero">
+  <h1 class="fade-up">Bussain's Digital Garden ✦</h1>
+  <p class="subheading fade-up" id="subheading">
+    half-asleep, always doodling, decent gamer, forever reading
+  </p>
+</section>
+
+<section id="about">
+  <h2 class="fade-up" style="margin-bottom: 2rem;">About Me</h2>
+
+  <div class="card fade-up">
+    Hi, I'm Bushra — but I go by Bussain ✦<br><br>
+    Native English speaker attempting (and slightly failing) to learn multiple languages.
+    I build tiny digital worlds, draw at unreasonable hours, and consume stories like a JRPG protagonist collecting side quests.
+  </div>
+
+  <div class="grid">
+
+    <div class="card fade-up">
+      <strong style="color: var(--accent); font-size: 1.2rem;">✦ Inventory (Loves)</strong><br><br>
+      Lychee • mango • guava • pomegranates • sleep • drawing • reading • coding websites • chocolate •
+      anime • manga/manhwa/danmei • stationery • cats • sweets • pretty knives • occasional history spirals
+    </div>
+
+    <div class="card fade-up">
+      <strong style="color: var(--accent); font-size: 1.2rem;">🎮 Active Quests (Games)</strong><br><br>
+      Animal Crossing • Undertale • Genshin Impact • Zenless Zone Zero • Honkai: Star Rail •
+      Elden Ring • The House in Fata Morgana • Love and Deepspace • The Legend of Zelda •
+      Final Fantasy • most otome games (emotional damage maxed)
+    </div>
+
+    <div class="card fade-up">
+      <strong style="color: var(--accent); font-size: 1.2rem;">📺 Spell Archive (Anime)</strong><br><br>
+      Attack on Titan • Gintama • Free! • Haikyuu!! • Frieren • Jujutsu Kaisen • Death Parade
+    </div>
+
+    <div class="card fade-up">
+      <strong style="color: var(--accent); font-size: 1.2rem;">✗ Debuffs (Dislikes)</strong><br><br>
+      Okra • anything bitter • hot weather • bugs bigger than 5cm
+    </div>
+
+  </div>
+</section>
+
+<footer>✦ Bussain's Corner ✦ 2026</footer>
+
+<script>
+function startSite(){
+  document.getElementById('startScreen').style.display='none';
+}
+
+/* ✦ Pixel Galaxy Generator */
+const canvas=document.getElementById('pixelGalaxy');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+for(let i=0;i<400;i++){
+  const x=Math.random()*canvas.width;
+  const y=Math.random()*canvas.height;
+  const size=Math.random()*2.5;
+  ctx.fillStyle=['#ffffff','#8A8FFF','#CDA4FF','#B8BCFF'][Math.floor(Math.random()*4)];
+  ctx.fillRect(x,y,size,size);
+}
+
+/* ✦ Scroll Hide Navbar */
+let lastScroll=0;
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  const current=window.pageYOffset;
+  if(current>lastScroll && current > 100){
+    navbar.classList.add('hidden');
+  } else {
+    navbar.classList.remove('hidden');
+  }
+  lastScroll=current;
+});
+
+/* ✦ Fade Up */
+const faders=document.querySelectorAll('.fade-up');
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+   if(entry.isIntersecting){
+     entry.target.classList.add('visible');
+   }
+ })
+},{threshold:.2, rootMargin: "50px"});
+faders.forEach(el=>observer.observe(el));
+
+/* ✦ Pixel Vanish Hover */
+const sub=document.getElementById('subheading');
+if(sub) {
+  sub.addEventListener('mouseenter',()=>sub.classList.add('pixel-hide'));
+  sub.addEventListener('mouseleave',()=>sub.classList.remove('pixel-hide'));
+}
+
+/* ✦ Cursor */
+const cursor=document.querySelector('.cursor');
+document.addEventListener('mousemove',e=>{
+ cursor.style.left=e.clientX+'px';
+ cursor.style.top=e.clientY+'px';
+});
+
+/* ✦ Resize canvas */
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  // Redraw pixels
+  for(let i=0;i<400;i++){
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height;
+    const size=Math.random()*2.5;
+    ctx.fillStyle=['#ffffff','#8A8FFF','#CDA4FF','#B8BCFF'][Math.floor(Math.random()*4)];
+    ctx.fillRect(x,y,size,size);
+  }
+});
+</script>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
